@@ -15,10 +15,20 @@ class CatsController extends Controller
      */
     public function index(Request $request)
     {
+        if($request->input('filter')){
+            $query = Cat::query();
+            $query->when(request()->filled('filter'), function($query){
+                [$criteria, $value] = explode(':', request('filter'));
+                return $query->where($criteria, $value);
+            });
+
+            return $query->get();
+        } 
         $sortColumn = $request->input('sort', 'name');
         $sortDirection = starts_with($sortColumn, '-') ? 'desc' : 'asc';
         $sortColumn = ltrim($sortColumn, '-');
         return Cat::orderBy($sortColumn, $sortDirection)->paginate(3);
+
         /* return Cat::paginate(3); */
     }
 
