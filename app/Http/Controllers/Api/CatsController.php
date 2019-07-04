@@ -25,7 +25,7 @@ class CatsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Cat::create($request->only(['name', 'breed']));
     }
 
     /**
@@ -36,7 +36,7 @@ class CatsController extends Controller
      */
     public function show($id)
     {
-        //
+        return Cat::findOrFail($id);
     }
 
     /**
@@ -48,7 +48,9 @@ class CatsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cat = Cat::findOrFail($id);
+        $cat->update($request->only(['name', 'breed']));
+        return $cat;
     }
 
     /**
@@ -59,6 +61,6 @@ class CatsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Cat::findOrFail($id)->delete();
     }
 }
