@@ -13,9 +13,13 @@ class CatsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Cat::paginate(3);
+        $sortColumn = $request->input('sort', 'name');
+        $sortDirection = starts_with($sortColumn, '-') ? 'desc' : 'asc';
+        $sortColumn = ltrim($sortColumn, '-');
+        return Cat::orderBy($sortColumn, $sortDirection)->paginate(3);
+        /* return Cat::paginate(3); */
     }
 
     /**
