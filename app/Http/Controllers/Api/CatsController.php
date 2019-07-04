@@ -14,7 +14,7 @@ class CatsController extends Controller
      */
     public function index()
     {
-        //
+        return Cat::all();
     }
 
     /**
