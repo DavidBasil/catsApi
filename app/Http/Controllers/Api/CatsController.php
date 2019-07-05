@@ -24,6 +24,7 @@ class CatsController extends Controller
 
             return $query->get();
         } 
+
         $sortColumn = $request->input('sort', 'name');
         $sortDirection = starts_with($sortColumn, '-') ? 'desc' : 'asc';
         $sortColumn = ltrim($sortColumn, '-');
